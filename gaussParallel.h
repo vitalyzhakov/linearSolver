@@ -10,11 +10,11 @@
 
 class gaussParallel {
 public:
-    gaussParallel();
+    gaussParallel(int size);
     gaussParallel(const gaussParallel& orig);
     virtual ~gaussParallel();
     
-    int serialResultCalculation(double** pMatrix, double* pVector, double* pResult);
+    int resultCalculation(double** pMatrix, double* pVector, double* pResult);
 private:
     int mSize;
     int* pSerialPivotPos; // The number of pivot rows selected at the iterations

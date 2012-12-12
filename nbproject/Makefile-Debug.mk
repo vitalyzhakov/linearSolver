@@ -36,9 +36,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/gaussSolver.o \
 	${OBJECTDIR}/matrixHelpers.o \
 	${OBJECTDIR}/dataGen.o \
+	${OBJECTDIR}/gaussSerial.o \
 	${OBJECTDIR}/gaussParallel.o
 
 
@@ -71,11 +71,6 @@ ${OBJECTDIR}/main.o: main.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
 
-${OBJECTDIR}/gaussSolver.o: gaussSolver.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/gaussSolver.o gaussSolver.cpp
-
 ${OBJECTDIR}/matrixHelpers.o: matrixHelpers.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
@@ -85,6 +80,11 @@ ${OBJECTDIR}/dataGen.o: dataGen.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/dataGen.o dataGen.cpp
+
+${OBJECTDIR}/gaussSerial.o: gaussSerial.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/gaussSerial.o gaussSerial.cpp
 
 ${OBJECTDIR}/gaussParallel.o: gaussParallel.cpp 
 	${MKDIR} -p ${OBJECTDIR}

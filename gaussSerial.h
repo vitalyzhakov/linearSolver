@@ -1,5 +1,5 @@
 /* 
- * File:   gaussSolver.h
+ * File:   gaussSerial.h
  * Author: zhakov
  *
  * Created on 4 Декабрь 2012 г., 23:51
@@ -8,13 +8,13 @@
 #ifndef GAUSSSOLVER_H
 #define	GAUSSSOLVER_H
 
-class gaussSolver {
+class gaussSerial {
 public:
-    gaussSolver(int size);
-    gaussSolver(const gaussSolver& orig);
-    virtual ~gaussSolver();
+    gaussSerial(int size);
+    gaussSerial(const gaussSerial& orig);
+    virtual ~gaussSerial();
 
-    int serialResultCalculation(double** pMatrix, double* pVector, double* pResult);
+    int resultCalculation(double** pMatrix, double* pVector, double* pResult);
 private:
     int mSize;
     int* pSerialPivotPos; // The number of pivot rows selected at the iterations

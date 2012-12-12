@@ -7,8 +7,19 @@
 
 #include "gaussParallel.h"
 #include "omp.h"
+#include "math.h"
+#include "types.h"
+#include "stdio.h"
 
-gaussParallel::gaussParallel() {
+gaussParallel::gaussParallel(int size) {
+    mSize = size;
+
+    pSerialPivotIter = new int[size];
+    pSerialPivotPos = new int[size];
+    //Заполняем -1, чтобы было понятно, что в эти строки мы ещё не заходили
+    for (int i = 0; i < size; i++) {
+        pSerialPivotIter[i] = -1;
+    }
 }
 
 gaussParallel::gaussParallel(const gaussParallel& orig) {
@@ -17,7 +28,7 @@ gaussParallel::gaussParallel(const gaussParallel& orig) {
 gaussParallel::~gaussParallel() {
 }
 
-int gaussParallel::serialResultCalculation(double** pMatrix, double* pVector, double* pResult) {
+int gaussParallel::resultCalculation(double** pMatrix, double* pVector, double* pResult) {
 
 
     // Gaussian elimination
@@ -36,12 +47,23 @@ int gaussParallel::findPivotRow(double** pMatrix, int Iter) {
     int i; // Loop variable 
 
     // Choose the row, that stores the maximum element
-    for (i = 0; i < mSize; i++) {
-        if ((pSerialPivotIter[i] == -1) && (fabs(pMatrix[i][Iter]) > MaxValue)) {
-            PivotRow = i;
-            MaxValue = fabs(pMatrix[i][Iter]);
+#pragma omp parallel
+    {
+        TThreadPivotRow ThreadPivotRow;
+        ThreadPivotRow.MaxValue = 0;
+        ThreadPivotRow.PivotRow = -1;
+
+#pragma omp for
+        for (i = 0; i < mSize; i++) {
+            if ((pSerialPivotIter[i] == -1) &&
+                    (fabs(pMatrix[i][Iter]) > ThreadPivotRow.MaxValue)) {
+                ThreadPivotRow.PivotRow = i;
+                ThreadPivotRow.MaxValue = fabs(pMatrix[i][Iter]);
+            }
         }
+        printf("Local thread(id = %i) pivot row: %i\n", omp_get_thread_num(), ThreadPivotRow.PivotRow);
     }
+
     return PivotRow;
 }
 
@@ -60,7 +82,7 @@ int gaussParallel::serialColumnElimination(double** pMatrix, double* pVector, in
             pVector[i] -= PivotFactor * pVector[Pivot];
         }
     }
-    
+
     return 0;
 }
 
@@ -81,8 +103,8 @@ int gaussParallel::serialGaussianElimination(double** pMatrix, double* pVector) 
         pSerialPivotIter[PivotRow] = Iter;
         serialColumnElimination(pMatrix, pVector, PivotRow, Iter);
     }
-    
-    
+
+
 
     return 0;
 }

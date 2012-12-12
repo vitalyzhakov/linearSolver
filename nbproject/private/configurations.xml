@@ -28,10 +28,14 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -m 64</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -m asdf</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -m 5</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -m 500</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -m 3000</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -m 500</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -m 500 -algorithm </runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -m 500 -algorithm gauss-serial</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 500 -algorithm gauss-serial</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 500 -algorithm gauss-parallel</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" -m 3000</runcommand>
+        <runcommand>"${OUTPUT_PATH}" -msize 500 -algorithm gauss-parallel</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

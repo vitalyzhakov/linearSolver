@@ -1,16 +1,16 @@
 /* 
- * File:   gaussSolver.cpp
+ * File:   gaussSerial.cpp
  * Author: zhakov
  * 
  * Created on 4 Декабрь 2012 г., 23:51
  */
 
-#include "gaussSolver.h"
+#include "gaussSerial.h"
 #include "math.h"
 #include "stdio.h"
 #include "matrixHelpers.h"
 
-gaussSolver::gaussSolver(int size) {
+gaussSerial::gaussSerial(int size) {
     mSize = size;
 
     pSerialPivotIter = new int[size];
@@ -22,13 +22,13 @@ gaussSolver::gaussSolver(int size) {
 
 }
 
-gaussSolver::gaussSolver(const gaussSolver& orig) {
+gaussSerial::gaussSerial(const gaussSerial& orig) {
 }
 
-gaussSolver::~gaussSolver() {
+gaussSerial::~gaussSerial() {
 }
 
-int gaussSolver::serialResultCalculation(double** pMatrix, double* pVector, double* pResult) {
+int gaussSerial::resultCalculation(double** pMatrix, double* pVector, double* pResult) {
 
 
     // Gaussian elimination
@@ -41,7 +41,7 @@ int gaussSolver::serialResultCalculation(double** pMatrix, double* pVector, doub
 
 // Function for finding the pivot row
 
-int gaussSolver::findPivotRow(double** pMatrix, int Iter) {
+int gaussSerial::findPivotRow(double** pMatrix, int Iter) {
     int PivotRow = -1; // The index of the pivot row 
     double MaxValue = 0; // The value of the pivot element 
     int i; // Loop variable 
@@ -59,7 +59,7 @@ int gaussSolver::findPivotRow(double** pMatrix, int Iter) {
 
 // Column elimination
 
-int gaussSolver::serialColumnElimination(double** pMatrix, double* pVector, int Pivot, int Iter) {
+int gaussSerial::serialColumnElimination(double** pMatrix, double* pVector, int Pivot, int Iter) {
     double PivotValue, PivotFactor;
     PivotValue = pMatrix[Pivot][Iter];
     for (int i = 0; i < mSize; i++) {
@@ -78,7 +78,7 @@ int gaussSolver::serialColumnElimination(double** pMatrix, double* pVector, int 
 
 // Gaussian elimination
 
-int gaussSolver::serialGaussianElimination(double** pMatrix, double* pVector) {
+int gaussSerial::serialGaussianElimination(double** pMatrix, double* pVector) {
     int Iter;
     // The Number of the iteration of the gaussian
     // elimination
@@ -100,7 +100,7 @@ int gaussSolver::serialGaussianElimination(double** pMatrix, double* pVector) {
 
 //Обратный ход метода Гаусса
 
-int gaussSolver::serialBackSubstitution(double** pMatrix, double* pVector, double* pResult) {
+int gaussSerial::serialBackSubstitution(double** pMatrix, double* pVector, double* pResult) {
     int RowIndex, Row;
     for (int i = mSize - 1; i >= 0; i--) {
         RowIndex = pSerialPivotPos[i];

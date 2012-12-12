@@ -8,11 +8,12 @@
       <itemPath>dataGen.h</itemPath>
       <itemPath>gaussParallel.cpp</itemPath>
       <itemPath>gaussParallel.h</itemPath>
-      <itemPath>gaussSolver.cpp</itemPath>
-      <itemPath>gaussSolver.h</itemPath>
+      <itemPath>gaussSerial.cpp</itemPath>
+      <itemPath>gaussSerial.h</itemPath>
       <itemPath>main.cpp</itemPath>
       <itemPath>matrixHelpers.cpp</itemPath>
       <itemPath>matrixHelpers.h</itemPath>
+      <itemPath>types.h</itemPath>
     </logicalFolder>
     <logicalFolder name="HeaderFiles"
                    displayName="Файлы заголовков"
