@@ -10,6 +10,7 @@
 #include "math.h"
 #include "types.h"
 #include "stdio.h"
+#include "matrixHelpers.h"
 
 gaussParallel::gaussParallel(int size) {
     mSize = size;
@@ -40,7 +41,6 @@ int gaussParallel::resultCalculation(double** pMatrix, double* pVector, double* 
 }
 
 // Function for finding the pivot row
-
 int gaussParallel::findPivotRow(double** pMatrix, int Iter) {
     int PivotRow = -1; // The index of the pivot row 
     double MaxValue = 0; // The value of the pivot element 
@@ -55,8 +55,7 @@ int gaussParallel::findPivotRow(double** pMatrix, int Iter) {
 
 #pragma omp for
         for (i = 0; i < mSize; i++) {
-            if ((pSerialPivotIter[i] == -1) &&
-                    (fabs(pMatrix[i][Iter]) > ThreadPivotRow.MaxValue)) {
+            if ((pSerialPivotIter[i] == -1) && (fabs(pMatrix[i][Iter]) > ThreadPivotRow.MaxValue)) {
                 ThreadPivotRow.PivotRow = i;
                 ThreadPivotRow.MaxValue = fabs(pMatrix[i][Iter]);
             }
@@ -79,7 +78,7 @@ int gaussParallel::findPivotRow(double** pMatrix, int Iter) {
 int gaussParallel::columnElimination(double** pMatrix, double* pVector, int Pivot, int Iter) {
     double PivotValue, PivotFactor;
     PivotValue = pMatrix[Pivot][Iter];
-#pragma omp parallel for private (PivotFactor)
+#pragma omp parallel for private (PivotFactor) schedule(dynamic,1)
     for (int i = 0; i < mSize; i++) {
         if (pSerialPivotIter[i] == -1) {
             PivotFactor = pMatrix[i][Iter] / PivotValue;
@@ -123,7 +122,7 @@ int gaussParallel::backSubstitution(double** pMatrix, double* pVector, double* p
     for (int i = mSize - 1; i >= 0; i--) {
         RowIndex = pSerialPivotPos[i];
         pResult[i] = pVector[RowIndex] / pMatrix[RowIndex][i];
-#pragma omp parallel for private (Row)
+//#pragma omp parallel for private (Row)
         for (int j = 0; j < i; j++) {
             Row = pSerialPivotPos[j];
             pVector[j] -= pMatrix[Row][i] * pResult[i];

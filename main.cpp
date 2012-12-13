@@ -91,7 +91,9 @@ int main(int argc, char** argv) {
 
     //Генерация данных
     dataGen::dummyDataInitialization(pMatrix, pVector, mSize);
-
+    
+    //matrixHelpers::printMatrix(pMatrix, mSize);
+    //matrixHelpers::printVector(pVector, mSize);
 
     //Идём по выбранному методу вычисления
     switch (solutionMethod) {
@@ -125,11 +127,12 @@ int main(int argc, char** argv) {
     }
 
 
+    //matrixHelpers::printVector(pResult, mSize);
 
     //Проверяем результат
     matrixHelpers::testSolvingResult(pMatrix, pVector, pResult, mSize);
     
-
+    
 
     //Потраченное время
     double finishTime = omp_get_wtime();
