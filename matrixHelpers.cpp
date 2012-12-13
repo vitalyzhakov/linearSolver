@@ -66,10 +66,10 @@ int matrixHelpers::testSolvingResult(double** pMatrix, double* pVector, double* 
         }
     }
     if (equal == 1) {
-        printf("The result of the parallel Gauss algorithm is NOT correct."
-                "Check your code.");
+        printf("The result of the algorithm is NOT correct."
+                "Check your code.\n");
     } else {
-        printf("The result of the parallel Gauss algorithm is correct.");
+        printf("The result of the algorithm is correct.\n");
     }
     
     delete [] pRightPartVector;

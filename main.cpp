@@ -126,7 +126,9 @@ int main(int argc, char** argv) {
 
 
 
-
+    //Проверяем результат
+    matrixHelpers::testSolvingResult(pMatrix, pVector, pResult, mSize);
+    
 
 
     //Потраченное время

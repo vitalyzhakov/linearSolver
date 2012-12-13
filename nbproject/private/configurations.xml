@@ -24,7 +24,6 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -m 64</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -m asdf</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -m 5</runcommandpicklistitem>
@@ -32,10 +31,11 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -m 500</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -m 500 -algorithm </runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -m 500 -algorithm gauss-serial</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 500 -algorithm gauss-serial</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 500 -algorithm gauss-parallel</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 500 -algorithm gauss-serial</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 500 -algorithm CG-parallel</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" -msize 500 -algorithm gauss-parallel</runcommand>
+        <runcommand>"${OUTPUT_PATH}" -msize 500 -algorithm CG-parallel</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

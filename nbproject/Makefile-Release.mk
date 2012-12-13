@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/CGParallel.o \
 	${OBJECTDIR}/matrixHelpers.o \
 	${OBJECTDIR}/dataGen.o \
 	${OBJECTDIR}/gaussSerial.o \
@@ -70,6 +71,11 @@ ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/CGParallel.o: CGParallel.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/CGParallel.o CGParallel.cpp
 
 ${OBJECTDIR}/matrixHelpers.o: matrixHelpers.cpp 
 	${MKDIR} -p ${OBJECTDIR}

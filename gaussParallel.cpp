@@ -32,9 +32,9 @@ int gaussParallel::resultCalculation(double** pMatrix, double* pVector, double* 
 
 
     // Gaussian elimination
-    serialGaussianElimination(pMatrix, pVector);
+    gaussianElimination(pMatrix, pVector);
     // Back substitution
-    serialBackSubstitution(pMatrix, pVector, pResult);
+    backSubstitution(pMatrix, pVector, pResult);
 
     return 0;
 }
@@ -61,8 +61,14 @@ int gaussParallel::findPivotRow(double** pMatrix, int Iter) {
                 ThreadPivotRow.MaxValue = fabs(pMatrix[i][Iter]);
             }
         }
-        printf("Local thread(id = %i) pivot row: %i\n", omp_get_thread_num(), ThreadPivotRow.PivotRow);
-    }
+#pragma omp critical
+        {
+            if (ThreadPivotRow.MaxValue > MaxValue) {
+                MaxValue = ThreadPivotRow.MaxValue;
+                PivotRow = ThreadPivotRow.PivotRow;
+            }
+        } // pragma omp critical
+    }// pragma omp parallel
 
     return PivotRow;
 }
@@ -70,9 +76,10 @@ int gaussParallel::findPivotRow(double** pMatrix, int Iter) {
 
 // Column elimination
 
-int gaussParallel::serialColumnElimination(double** pMatrix, double* pVector, int Pivot, int Iter) {
+int gaussParallel::columnElimination(double** pMatrix, double* pVector, int Pivot, int Iter) {
     double PivotValue, PivotFactor;
     PivotValue = pMatrix[Pivot][Iter];
+#pragma omp parallel for private (PivotFactor)
     for (int i = 0; i < mSize; i++) {
         if (pSerialPivotIter[i] == -1) {
             PivotFactor = pMatrix[i][Iter] / PivotValue;
@@ -89,7 +96,7 @@ int gaussParallel::serialColumnElimination(double** pMatrix, double* pVector, in
 
 // Gaussian elimination
 
-int gaussParallel::serialGaussianElimination(double** pMatrix, double* pVector) {
+int gaussParallel::gaussianElimination(double** pMatrix, double* pVector) {
     int Iter;
     // The Number of the iteration of the gaussian
     // elimination
@@ -101,7 +108,7 @@ int gaussParallel::serialGaussianElimination(double** pMatrix, double* pVector) 
         PivotRow = findPivotRow(pMatrix, Iter);
         pSerialPivotPos[Iter] = PivotRow;
         pSerialPivotIter[PivotRow] = Iter;
-        serialColumnElimination(pMatrix, pVector, PivotRow, Iter);
+        columnElimination(pMatrix, pVector, PivotRow, Iter);
     }
 
 
@@ -109,13 +116,14 @@ int gaussParallel::serialGaussianElimination(double** pMatrix, double* pVector) 
     return 0;
 }
 
-//Обратный ход метода Гаусса
-
-int gaussParallel::serialBackSubstitution(double** pMatrix, double* pVector, double* pResult) {
+/* Обратный ход метода Гаусса
+ */
+int gaussParallel::backSubstitution(double** pMatrix, double* pVector, double* pResult) {
     int RowIndex, Row;
     for (int i = mSize - 1; i >= 0; i--) {
         RowIndex = pSerialPivotPos[i];
         pResult[i] = pVector[RowIndex] / pMatrix[RowIndex][i];
+#pragma omp parallel for private (Row)
         for (int j = 0; j < i; j++) {
             Row = pSerialPivotPos[j];
             pVector[j] -= pMatrix[Row][i] * pResult[i];

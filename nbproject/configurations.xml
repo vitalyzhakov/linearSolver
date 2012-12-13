@@ -4,6 +4,8 @@
     <logicalFolder name="SourceFiles"
                    displayName="Исходные файлы"
                    projectFiles="true">
+      <itemPath>CGParallel.cpp</itemPath>
+      <itemPath>CGParallel.h</itemPath>
       <itemPath>dataGen.cpp</itemPath>
       <itemPath>dataGen.h</itemPath>
       <itemPath>gaussParallel.cpp</itemPath>

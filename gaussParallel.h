@@ -21,9 +21,9 @@ private:
     int* pSerialPivotIter; // The iterations, at which the rows were pivots
     
     int findPivotRow(double** pMatrix, int Iter);
-    int serialGaussianElimination(double** pMatrix, double* pVector);
-    int serialBackSubstitution(double** pMatrix, double* pVector, double* pResult);
-    int serialColumnElimination(double** pMatrix, double* pVector, int Pivot, int Iter);
+    int gaussianElimination(double** pMatrix, double* pVector);
+    int backSubstitution(double** pMatrix, double* pVector, double* pResult);
+    int columnElimination(double** pMatrix, double* pVector, int Pivot, int Iter);
 };
 
 #endif	/* GAUSSPARALLEL_H */
