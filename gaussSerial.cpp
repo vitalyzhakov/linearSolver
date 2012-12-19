@@ -39,8 +39,12 @@ int gaussSerial::resultCalculation(double** pMatrix, double* pVector, double* pR
     return 0;
 }
 
-// Function for finding the pivot row
-
+/**
+ * 
+ * @param pMatrix
+ * @param Iter
+ * @return 
+ */
 int gaussSerial::findPivotRow(double** pMatrix, int Iter) {
     int PivotRow = -1; // The index of the pivot row 
     double MaxValue = 0; // The value of the pivot element 
@@ -56,9 +60,12 @@ int gaussSerial::findPivotRow(double** pMatrix, int Iter) {
     return PivotRow;
 }
 
-
-// Column elimination
-
+/**
+ * 
+ * @param pMatrix
+ * @param pVector
+ * @return 
+ */
 int gaussSerial::serialColumnElimination(double** pMatrix, double* pVector, int Pivot, int Iter) {
     double PivotValue, PivotFactor;
     PivotValue = pMatrix[Pivot][Iter];
@@ -76,8 +83,12 @@ int gaussSerial::serialColumnElimination(double** pMatrix, double* pVector, int 
 }
 
 
-// Gaussian elimination
-
+/**
+ * 
+ * @param pMatrix
+ * @param pVector
+ * @return 
+ */
 int gaussSerial::serialGaussianElimination(double** pMatrix, double* pVector) {
     int Iter;
     // The Number of the iteration of the gaussian
@@ -98,8 +109,14 @@ int gaussSerial::serialGaussianElimination(double** pMatrix, double* pVector) {
     return 0;
 }
 
-//Обратный ход метода Гаусса
-
+/**
+ * Обратный ход метода Гаусса
+ * 
+ * @param pMatrix
+ * @param pVector
+ * @param pResult
+ * @return 
+ */
 int gaussSerial::serialBackSubstitution(double** pMatrix, double* pVector, double* pResult) {
     int RowIndex, Row;
     for (int i = mSize - 1; i >= 0; i--) {

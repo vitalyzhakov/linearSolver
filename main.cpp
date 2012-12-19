@@ -91,53 +91,48 @@ int main(int argc, char** argv) {
 
     //Генерация данных
     dataGen::dummyDataInitialization(pMatrix, pVector, mSize);
-    
-    //matrixHelpers::printMatrix(pMatrix, mSize);
-    //matrixHelpers::printVector(pVector, mSize);
+
 
     //Идём по выбранному методу вычисления
     switch (solutionMethod) {
-        case METHOD_TYPE_SERIAL_GAUSS: {
-            printf("Using GAUSS SERIAL\n");
+        case METHOD_TYPE_SERIAL_GAUSS:
+        {
             gaussSerial* gaussSerialSolver = new gaussSerial(mSize);
             gaussSerialSolver->resultCalculation(pMatrix, pVector, pResult);
             break;
         }
-        case METHOD_TYPE_PARALLEL_GAUSS: {
-            printf("Using GAUSS PARALLEL\n");
+        case METHOD_TYPE_PARALLEL_GAUSS:
+        {
             gaussParallel* gaussParallelSolver = new gaussParallel(mSize);
             gaussParallelSolver->resultCalculation(pMatrix, pVector, pResult);
-            break; 
+            break;
         }
-        case METHOD_TYPE_SERIAL_CG: {
-            printf("Using CG SERIAL\n");
+        case METHOD_TYPE_SERIAL_CG:
+        {
             //@todo Добавить вызов метода
             break;
         }
-        case METHOD_TYPE_PARALLEL_CG: {
-            printf("Using CG PARALLEL\n");
+        case METHOD_TYPE_PARALLEL_CG:
+        {
             //@todo добавить вызов методаы
             break;
         }
-        default: {
+        default:
+        {
             //Если ни один из методов не реализован, выходим
             return EXECUTION_ERROR_METHOD_NOT_DEFINED;
             break;
         }
     }
 
-
-    matrixHelpers::printVector(pResult, mSize);
-
     //Проверяем результат
     matrixHelpers::testSolvingResult(pMatrix, pVector, pResult, mSize);
-    
-    //matrixHelpers::printVector(pResult, mSize);
+
 
     //Потраченное время
     double finishTime = omp_get_wtime();
 
-    printf("Calculation time: %f seconds\n", finishTime - startTime);
+    printf("Calculation time: %f seconds, method: %s, dimension: %d\n", finishTime - startTime, argv[4], mSize);
 
     return 0;
 }

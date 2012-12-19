@@ -47,13 +47,13 @@ int gaussParallel::findPivotRow(double** pMatrix, int Iter) {
     int i; // Loop variable 
 
     // Choose the row, that stores the maximum element
-    #pragma omp parallel
+//    #pragma omp parallel
     {
         TThreadPivotRow ThreadPivotRow;
         ThreadPivotRow.MaxValue = 0;
         ThreadPivotRow.PivotRow = -1;
 
-        #pragma omp for
+//        #pragma omp for
         for (i = 0; i < mSize; i++) {
             if ((pSerialPivotIter[i] == -1) && (fabs(pMatrix[i][Iter]) > ThreadPivotRow.MaxValue)) {
                 ThreadPivotRow.PivotRow = i;
@@ -61,13 +61,13 @@ int gaussParallel::findPivotRow(double** pMatrix, int Iter) {
             }
         }
         
-        #pragma omp critical
-        {
+//        #pragma omp critical
+//        {
             if (ThreadPivotRow.MaxValue > MaxValue) {
                 MaxValue = ThreadPivotRow.MaxValue;
                 PivotRow = ThreadPivotRow.PivotRow;
             }
-        } // pragma omp critical
+//        } // pragma omp critical
     }// pragma omp parallel
 
     return PivotRow;
