@@ -127,12 +127,12 @@ int main(int argc, char** argv) {
     }
 
 
-    //matrixHelpers::printVector(pResult, mSize);
+    matrixHelpers::printVector(pResult, mSize);
 
     //Проверяем результат
     matrixHelpers::testSolvingResult(pMatrix, pVector, pResult, mSize);
     
-    
+    //matrixHelpers::printVector(pResult, mSize);
 
     //Потраченное время
     double finishTime = omp_get_wtime();

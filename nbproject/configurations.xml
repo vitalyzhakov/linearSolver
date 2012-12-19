@@ -47,6 +47,7 @@
       <compileType>
         <ccTool>
           <commandLine>-fopenmp</commandLine>
+          <warningLevel>2</warningLevel>
         </ccTool>
       </compileType>
     </conf>

@@ -5,8 +5,8 @@
  * Created on 4 Декабрь 2012 г., 23:51
  */
 
-#ifndef GAUSSSOLVER_H
-#define	GAUSSSOLVER_H
+#ifndef GAUSSSERIAL_H
+#define	GAUSSSERIAL_H
 
 class gaussSerial {
 public:
@@ -27,5 +27,5 @@ private:
 
 };
 
-#endif	/* GAUSSSOLVER_H */
+#endif	/* GAUSSSERIAL_H */
 
