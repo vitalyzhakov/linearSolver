@@ -12,6 +12,8 @@
 #include "gaussSerial.h"
 #include "matrixHelpers.h"
 #include "gaussParallel.h"
+#include "CGParallel.h"
+#include "CGSerial.h"
 
 //Возможные варианты алгоритмов решения
 #define METHOD_TYPE_SERIAL_GAUSS 1
@@ -20,9 +22,9 @@
 #define METHOD_TYPE_PARALLEL_CG 4
 
 //Соответствующие константы
-#define METHOD_NAME_SERIAL_GAUSS "gauss-serial" //Гаусс
+#define METHOD_NAME_SERIAL_GAUSS "gauss-serial" //Метод Гаусса
 #define METHOD_NAME_PARALLEL_GAUSS "gauss-parallel"
-#define METHOD_NAME_SERIAL_CG "CG-serial" //Сопряжённых градиентов
+#define METHOD_NAME_SERIAL_CG "CG-serial" //Метод сопряжённых градиентов
 #define METHOD_NAME_PARALLEL_CG "CG-parallel"
 
 
@@ -43,7 +45,8 @@ int main(int argc, char** argv) {
     double startTime = omp_get_wtime();
 
     if (argc <= 4) {
-        printf("Available arguments: \n\t -msize [N] - Matrix size\n");
+        printf("Available arguments: \n\t -msize [N] - Matrix size",
+                "\n\t -algorithm [name] - solution algorithm");
         return EXECUTION_ERROR_NOT_ENOUGH_ARGUMENTS;
     }
 
@@ -109,12 +112,14 @@ int main(int argc, char** argv) {
         }
         case METHOD_TYPE_SERIAL_CG:
         {
-            //@todo Добавить вызов метода
+            CGSerial* CGSerialSolver = new CGSerial();
+            CGSerialSolver->resultCalculation(pMatrix, pVector, pResult, mSize);
             break;
         }
         case METHOD_TYPE_PARALLEL_CG:
         {
-            //@todo добавить вызов методаы
+            CGParallel* CGParallelSolver = new CGParallel();
+            CGParallelSolver->resultCalculation(pMatrix, pVector, pResult, mSize);
             break;
         }
         default:

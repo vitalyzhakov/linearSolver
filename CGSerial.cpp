@@ -1,27 +1,26 @@
 /* 
- * File:   CGParallel.cpp
+ * File:   CGSerial.cpp
  * Author: zhakov
- * Решение СЛАУ методом сопряжённых градиентов
  * 
- * Created on 13 Декабрь 2012 г., 21:37
+ * Created on 20 Декабрь 2012 г., 23:48
  */
 
-#include "CGParallel.h"
+#include "CGSerial.h"
 #include "stdlib.h"
 #include "math.h"
 #include "stdio.h"
 #include "matrixHelpers.h"
 
-CGParallel::CGParallel() {
+CGSerial::CGSerial() {
 }
 
-CGParallel::CGParallel(const CGParallel& orig) {
+CGSerial::CGSerial(const CGSerial& orig) {
 }
 
-CGParallel::~CGParallel() {
+CGSerial::~CGSerial() {
 }
 
-void CGParallel::resultCalculation(double** pMatrix, double* pVector, double* pResult, int Size) {
+void CGSerial::resultCalculation(double** pMatrix, double* pVector, double* pResult, int Size) {
     double *CurrentApproximation, *PreviousApproximation;
     double *CurrentGradient, *PreviousGradient;
     double *CurrentDirection, *PreviousDirection;
@@ -61,7 +60,7 @@ void CGParallel::resultCalculation(double** pMatrix, double* pVector, double* pR
             //SwapPointers(PreviousDirection, CurrentDirection);
         }
         //compute gradient
-#pragma omp parallel for
+//#pragma omp parallel for
         for (int i = 0; i < Size; i++) {
             CurrentGradient[i] = -pVector[i];
             for (int j = 0; j < Size; j++)
@@ -69,13 +68,13 @@ void CGParallel::resultCalculation(double** pMatrix, double* pVector, double* pR
         }
         //compute direction
         double IP1 = 0, IP2 = 0;
-#pragma omp parallel for reduction(+:IP1,IP2)
+//#pragma omp parallel for reduction(+:IP1,IP2)
         for (int i = 0; i < Size; i++) {
             IP1 += CurrentGradient[i] * CurrentGradient[i];
             IP2 += PreviousGradient[i] * PreviousGradient[i];
         }
         
-#pragma omp parallel for
+//#pragma omp parallel for
         for (int i = 0; i < Size; i++) {
             CurrentDirection[i] = -CurrentGradient[i] +
                     PreviousDirection[i] * IP1 / IP2;
@@ -83,7 +82,7 @@ void CGParallel::resultCalculation(double** pMatrix, double* pVector, double* pR
         //compute size step
         IP1 = 0;
         IP2 = 0;
-#pragma omp parallel for reduction(+:IP1,IP2)
+//#pragma omp parallel for reduction(+:IP1,IP2)
         for (int i = 0; i < Size; i++) {
             Denom[i] = 0;
             for (int j = 0; j < Size; j++)
@@ -93,7 +92,7 @@ void CGParallel::resultCalculation(double** pMatrix, double* pVector, double* pR
         }
         Step = -IP1 / IP2;
         
-#pragma omp parallel for
+//#pragma omp parallel for
         for (int i = 0; i < Size; i++) {
             CurrentApproximation[i] = PreviousApproximation[i] + Step * CurrentDirection[i];
             
@@ -116,7 +115,7 @@ void CGParallel::resultCalculation(double** pMatrix, double* pVector, double* pR
     delete Denom;
 }
 
-double CGParallel::diff(double *vector1, double* vector2, int Size) {
+double CGSerial::diff(double *vector1, double* vector2, int Size) {
     double sum = 0;
     for (int i = 0; i < Size; i++) {
         sum += fabs(vector1[i] - vector2[i]);

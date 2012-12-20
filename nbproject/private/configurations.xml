@@ -24,18 +24,18 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 5 -algorithm CG-parallel</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 500 -algorithm gauss-serial</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 10 -algorithm gauss-parallel</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 30 -algorithm gauss-parallel</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 5 -algorithm gauss-serial</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 5 -algorithm gauss-parallel</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 100 -algorithm gauss-parallel</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 500 -algorithm gauss-parallel</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 3000 -algorithm gauss-serial</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 3000 -algorithm gauss-parallel</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 5 -algorithm CG-parallel</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 500 -algorithm CG-parallel</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 3000 -algorithm CG-parallel</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 1000 -algorithm CG-parallel</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -msize 1000 -algorithm CG-serial</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" -msize 3000 -algorithm gauss-parallel</runcommand>
+        <runcommand>"${OUTPUT_PATH}" -msize 1000 -algorithm CG-serial</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

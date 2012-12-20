@@ -52,7 +52,7 @@ int matrixHelpers::testSolvingResult(double** pMatrix, double* pVector, double* 
     double* pRightPartVector;
     // Flag, that shows wheather the right parts vectors are identical or not
     int equal = 0;
-    double Accuracy = 1.e-6; // Comparison accuracy
+    double Accuracy = 1.e-4; // Comparison accuracy
     pRightPartVector = new double [Size];
     for (int i = 0; i < Size; i++) {
         pRightPartVector[i] = 0;
