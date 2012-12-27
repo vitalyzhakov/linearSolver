@@ -14,6 +14,7 @@ public:
     CGSerial(const CGSerial& orig);
     virtual ~CGSerial();
     void resultCalculation(double** pMatrix, double* pVector, double* pResult, int Size);
+    int iterationsCount;
 private:
     double diff(double *vector1, double* vector2, int Size);
 

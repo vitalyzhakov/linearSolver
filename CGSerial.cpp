@@ -105,6 +105,7 @@ void CGSerial::resultCalculation(double** pMatrix, double* pVector, double* pRes
     for (int i = 0; i < Size; i++)
         pResult[i] = CurrentApproximation[i];
 
+    iterationsCount = Iter;
 
     delete CurrentApproximation;
     delete PreviousApproximation;

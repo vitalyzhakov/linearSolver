@@ -94,31 +94,36 @@ int main(int argc, char** argv) {
 
     //Генерация данных
     dataGen::dummyDataInitialization(pMatrix, pVector, mSize);
-
+    
+    //Создаём все объекты
+    gaussSerial* gaussSerialSolver;
+    gaussParallel* gaussParallelSolver;
+    CGSerial* CGSerialSolver;
+    CGParallel* CGParallelSolver;
 
     //Идём по выбранному методу вычисления
     switch (solutionMethod) {
         case METHOD_TYPE_SERIAL_GAUSS:
         {
-            gaussSerial* gaussSerialSolver = new gaussSerial(mSize);
+            gaussSerialSolver = new gaussSerial(mSize);
             gaussSerialSolver->resultCalculation(pMatrix, pVector, pResult);
             break;
         }
         case METHOD_TYPE_PARALLEL_GAUSS:
         {
-            gaussParallel* gaussParallelSolver = new gaussParallel(mSize);
+            gaussParallelSolver = new gaussParallel(mSize);
             gaussParallelSolver->resultCalculation(pMatrix, pVector, pResult);
             break;
         }
         case METHOD_TYPE_SERIAL_CG:
         {
-            CGSerial* CGSerialSolver = new CGSerial();
+            CGSerialSolver = new CGSerial();
             CGSerialSolver->resultCalculation(pMatrix, pVector, pResult, mSize);
             break;
         }
         case METHOD_TYPE_PARALLEL_CG:
         {
-            CGParallel* CGParallelSolver = new CGParallel();
+            CGParallelSolver = new CGParallel();
             CGParallelSolver->resultCalculation(pMatrix, pVector, pResult, mSize);
             break;
         }
@@ -137,7 +142,24 @@ int main(int argc, char** argv) {
     //Потраченное время
     double finishTime = omp_get_wtime();
 
-    printf("Calculation time: %f seconds, method: %s, dimension: %d\n", finishTime - startTime, argv[4], mSize);
+    printf("Calculation time: %f seconds, method: %s, dimension: %d ", finishTime - startTime, argv[4], mSize);
+    //Если это один из итерационных методов, то нужно вывести количество итераций
+    switch (solutionMethod) {
+        case METHOD_TYPE_SERIAL_CG:
+        {
+            printf("iterations_count: %d\n", CGSerialSolver->iterationsCount);
+            break;
+        }
+        case METHOD_TYPE_PARALLEL_CG:
+        {
+            printf("iterations_count: %d\n", CGParallelSolver->iterationsCount);
+            break;
+        }
+        default: {
+            printf("\n");
+        }
+    }
+    
 
     return 0;
 }

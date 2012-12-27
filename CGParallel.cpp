@@ -106,6 +106,7 @@ void CGParallel::resultCalculation(double** pMatrix, double* pVector, double* pR
     for (int i = 0; i < Size; i++)
         pResult[i] = CurrentApproximation[i];
 
+    iterationsCount = Iter;
 
     delete CurrentApproximation;
     delete PreviousApproximation;
